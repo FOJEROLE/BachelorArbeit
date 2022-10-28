@@ -1,5 +1,5 @@
 output "ARM_CLIENT_ID" {
-  value = azuread_application.gh-actions-mvd.application_id
+  value = azuread_application.gh-actions-hsw.application_id
 }
 
 output "ARM_SUBSCRIPTION_ID" {
@@ -11,15 +11,15 @@ output "ARM_TENANT_ID" {
 }
 
 output "APP_CLIENT_ID" {
-  value = azuread_application.mvd-runtimes.application_id
+  value = azuread_application.hsw-runtimes.application_id
 }
 
 output "APP_OBJECT_ID" {
-  value = azuread_service_principal.mvd-runtimes-sp.object_id
+  value = azuread_service_principal.hsw-runtimes-sp.object_id
 }
 output "APP_CLIENT_SECRET" {
   sensitive = true
-  value     = azuread_application_password.mvd-runtimes-sp-password.value
+  value     = azuread_application_password.hsw-runtimes-sp-password.value
 }
 
 output "ACR_NAME" {

@@ -1,5 +1,5 @@
 # Create an application for GH Actions
-resource "azuread_application" "gh-actions-mvd" {
+resource "azuread_application" "gh-actions-hsw" {
   display_name     = var.gh_actions_appname
   owners           = [data.azuread_client_config.current.object_id]
   sign_in_audience = "AzureADMyOrg"
@@ -14,13 +14,13 @@ resource "azuread_application" "gh-actions-mvd" {
 }
 
 # Create a service principal
-resource "azuread_service_principal" "gh-actions-mvd-sp" {
-  application_id = azuread_application.gh-actions-mvd.application_id
+resource "azuread_service_principal" "gh-actions-hsw-sp" {
+  application_id = azuread_application.gh-actions-hsw.application_id
 }
 
 # Create federated credentials for the main branch, and Pull requests
 resource "azuread_application_federated_identity_credential" "gh-actions-fc" {
-  application_object_id = azuread_application.gh-actions-mvd.object_id
+  application_object_id = azuread_application.gh-actions-hsw.object_id
   display_name          = var.application_fc_name
   description           = "Github Actions federated credential for your fork"
   audiences             = ["api://AzureADTokenExchange"]
@@ -29,7 +29,7 @@ resource "azuread_application_federated_identity_credential" "gh-actions-fc" {
 }
 
 resource "azuread_application_federated_identity_credential" "gh-actions-fc-pullrequest" {
-  application_object_id = azuread_application.gh-actions-mvd.object_id
+  application_object_id = azuread_application.gh-actions-hsw.object_id
   display_name          = var.application_fc_pr_name
   description           = "Github Actions federated credential for your fork (Pullrequests)"
   audiences             = ["api://AzureADTokenExchange"]
@@ -41,6 +41,6 @@ resource "azuread_application_federated_identity_credential" "gh-actions-fc-pull
 resource "azurerm_role_assignment" "owner" {
   scope                = data.azurerm_subscription.primary.id
   role_definition_name = "Owner"
-  principal_id         = azuread_service_principal.gh-actions-mvd-sp.object_id
+  principal_id         = azuread_service_principal.gh-actions-hsw-sp.object_id
 
 }

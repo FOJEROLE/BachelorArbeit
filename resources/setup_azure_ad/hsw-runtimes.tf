@@ -1,6 +1,6 @@
-# Create an application for MVD Runtimes
-resource "azuread_application" "mvd-runtimes" {
-  display_name     = var.mvd_runtimes_appname
+# Create an application for HSW Runtimes
+resource "azuread_application" "hsw-runtimes" {
+  display_name     = var.hsw_runtimes_appname
   owners           = [data.azuread_client_config.current.object_id]
   sign_in_audience = "AzureADMyOrg"
 
@@ -17,12 +17,12 @@ resource "azuread_application" "mvd-runtimes" {
 }
 
 # Create a service principal
-resource "azuread_service_principal" "mvd-runtimes-sp" {
-  application_id = azuread_application.mvd-runtimes.application_id
+resource "azuread_service_principal" "hsw-runtimes-sp" {
+  application_id = azuread_application.hsw-runtimes.application_id
 
 }
 
 # create password for the GH Actions SP
-resource "azuread_application_password" "mvd-runtimes-sp-password" {
-  application_object_id = azuread_application.mvd-runtimes.object_id
+resource "azuread_application_password" "hsw-runtimes-sp-password" {
+  application_object_id = azuread_application.hsw-runtimes.object_id
 }
